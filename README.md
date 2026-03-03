@@ -1,5 +1,7 @@
 这是一个手写定时任务项目，通过动手实践来真正掌握一项技能。
+
 v1 版本的实现比较简单
+
 1、schedule() - 调度方法，提交延迟执行的任务
 
 2、Trigger类 - 使用PriorityBlockingQueue优先队列存储任务，按执行时间排序
@@ -21,19 +23,29 @@ v1 版本的实现比较简单
 ![1.png](img/1.png)
 
 v2版本底层使用的时间轮来现实，适合大规模的任务调试需求。缺点是存在延时。
+
 1、TimerWheel - 主类，包含：
+
   10个槽位的环形数组(wheel)
+  
   Ticker线程负责推进时间
+  
   ExecutorService线程池执行任务
   
 2、DelayTask - 延迟任务类
+
   包含Runnable任务和截止时间(deadline)
+  
   双向链表结构(next/pre指针)
   
 3、MpscTaskQueue - 多生产者单消费者队列
+
   使用AtomicReference实现无锁并发
+  
   每个槽位对应一个队列
 
 
 执行流程如下：
 ![2.png](img/2.png)
+
+![3.png](img/3.png)
